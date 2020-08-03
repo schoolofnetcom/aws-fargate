@@ -1,0 +1,45 @@
+{
+    "containerDefinitions": [
+        {
+            "name": "container-using-efs",
+            "image": "amazonlinux:latest",
+            "entryPoint": [
+                "sh",
+                "-c"
+            ],
+            "command": [
+                "ls -la /mount/efs"
+            ],
+            "logConfiguration": { 
+                "logDriver": "awslogs",
+                "options": { 
+                   "awslogs-group" : "/ecs/efs-definition",
+                   "awslogs-region": "us-east-1",
+                   "awslogs-stream-prefix": "ecs"
+                }
+             },
+            "mountPoints": [
+                {
+                    "sourceVolume": "myEfsVolume",
+                    "containerPath": "/mount/efs",
+                    "readOnly": true
+                }
+            ]
+        }
+    ],
+    "volumes": [
+        {
+            "name": "myEfsVolume",
+            "efsVolumeConfiguration": {
+                "fileSystemId": "fs-36736db5"
+            }
+        }
+    ],
+    "cpu": "256",
+    "memory": "512",
+    "family": "efs-definition",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [ 
+        "FARGATE" 
+     ]
+}

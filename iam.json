@@ -1,0 +1,14 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetSecretValue"
+            ],
+            "Resource": [
+                "arn:aws:secretsmanager:region:aws_account_id:secret:username_value-u9bH6K"
+            ]
+        }
+    ]
+}

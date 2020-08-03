@@ -1,0 +1,44 @@
+{
+    "containerDefinitions": [ 
+       { 
+          "essential": true,
+          "image": "redis",
+          "logConfiguration": { 
+             "logDriver": "awslogs",
+             "options": { 
+                "awslogs-group" : "/ecs/redis-definition",
+                "awslogs-region": "us-east-1",
+                "awslogs-stream-prefix": "ecs"
+             }
+          },
+          "name": "redis",
+          "portMappings": [ 
+             { 
+                "containerPort": 6379,
+                "protocol": "tcp"
+             }
+          ],
+          "mountPoints": [
+            {
+                "sourceVolume": "myEfsVolume",
+                "containerPath": "/data"
+            }
+        ]
+       }
+    ],
+    "volumes": [
+        {
+            "name": "myEfsVolume",
+            "efsVolumeConfiguration": {
+                "fileSystemId": "fs-36736db5"
+            }
+        }
+    ],
+    "cpu": "256",
+    "family": "redis-definition",
+    "memory": "512",
+    "networkMode": "awsvpc",
+    "requiresCompatibilities": [ 
+        "FARGATE" 
+     ]
+ }

@@ -1,0 +1,43 @@
+{
+	"containerDefinitions": [
+        {
+          "name": "app",
+          "image": "jacksonlima91/fargate-php-vpc:v1",
+          "cpu": 100,
+          "memory": 100,
+          "portMappings": [
+            {
+              "containerPort": 9000
+            }
+          ],
+          "essential": true
+        },
+        {
+          "name": "web",
+          "image": "jacksonlima91/fargate-nginx-vpc:v1",
+          "cpu": 100,
+          "memory": 100,
+          "portMappings": [
+            {
+              "containerPort": 80
+            }
+          ],
+          "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+              "awslogs-group": "/ecs/awsvpc-fargate",
+              "awslogs-region": "us-east-1",
+              "awslogs-stream-prefix": "ecs"
+            }
+        },
+          "essential": true
+        }
+      ],
+      "cpu": "256",
+      "memory": "512",
+      "family": "awsvpc-fargate",
+      "networkMode": "awsvpc",
+      "requiresCompatibilities": [ 
+          "FARGATE" 
+       ]
+}
